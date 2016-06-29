@@ -13,5 +13,6 @@
 @property (strong, nonatomic) NSString *calculateString;
 
 - (NSString *)checkCalculateStringOnValid;
+- (NSString *)calculate;
 
 @end
