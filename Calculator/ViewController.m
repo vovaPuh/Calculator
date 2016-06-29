@@ -30,12 +30,21 @@
     
     VMCalculation *calculation = [[VMCalculation alloc] init];
     calculation.calculateString = calculateString;
-    NSString *errorText = [calculation checkCalculateStringOnValid];
     
-    if (![errorText isEqualToString:@""]) {
+    NSString *errorText = nil;
+    if (![calculation checkCalculateStringOnValid:&errorText]) {
         [self showErrorAlert:errorText];
         return;
     }
+    
+    double result = [calculation calculate:&errorText];
+    
+    if (errorText != nil) {
+        [self showErrorAlert:errorText];
+        return;
+    }
+    
+    NSLog(@"Result: %.2f", result);
 }
 
 - (void)showErrorAlert:(NSString *)errorText {

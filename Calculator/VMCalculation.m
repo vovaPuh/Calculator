@@ -8,6 +8,8 @@
 
 #import "VMCalculation.h"
 
+typedef double (^Operation)(double, double, NSString **);
+
 static NSString *specialSymbol = @"⍊";
 static NSString *notCorrectExpression = @"Not correct expression in calculate string";
 
@@ -28,12 +30,12 @@ static NSString *notCorrectExpression = @"Not correct expression in calculate st
     if (self) {
         
         self.components = [[NSMutableArray alloc] init];
-        self.operations = @{@"-":^double (double firstOperand, double secondOperand, NSString *errorText) { return firstOperand - secondOperand; },
-                            @"+":^double (double firstOperand, double secondOperand, NSString *errorText) { return firstOperand + secondOperand; },
-                            @"*":^double (double firstOperand, double secondOperand, NSString *errorText) { return firstOperand * secondOperand; },
-                            @"/":^double (double firstOperand, double secondOperand, NSString *errorText) {
+        self.operations = @{@"-":^double (double firstOperand, double secondOperand, NSString **errorText) { return firstOperand - secondOperand; },
+                            @"+":^double (double firstOperand, double secondOperand, NSString **errorText) { return firstOperand + secondOperand; },
+                            @"*":^double (double firstOperand, double secondOperand, NSString **errorText) { return firstOperand * secondOperand; },
+                            @"/":^double (double firstOperand, double secondOperand, NSString **errorText) {
                                 if (secondOperand == 0.0) {
-                                    errorText = @"Not correct expression in calculate string";
+                                    *errorText = notCorrectExpression;
                                     return 0.0;
                                 }
                                 return firstOperand / secondOperand;
@@ -54,20 +56,22 @@ static NSString *notCorrectExpression = @"Not correct expression in calculate st
     _calculateString = [calculateString stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
-- (NSString *)checkCalculateStringOnValid {
+- (BOOL)checkCalculateStringOnValid:(NSString **)errorText {
     
     if ([self.calculateString isEqualToString:@""]) {
-        return @"Calculate string is empty!";
+        *errorText = @"Calculate string is empty!";
+        return false;
     }
     
     NSCharacterSet *validationSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+*/()."] invertedSet];
     NSArray *components = [self.calculateString componentsSeparatedByCharactersInSet:validationSet];
     
     if (components.count > 1) {
-        return notCorrectExpression;
+        *errorText = notCorrectExpression;
+        return false;
     }
     
-    return @"";
+    return true;
 }
 
 - (BOOL)addNumberInComponents:(NSString *)number {
@@ -174,13 +178,58 @@ static NSString *notCorrectExpression = @"Not correct expression in calculate st
     return true;
 }
 
-- (NSString *)calculate {
+- (double)calculate:(NSString **)errorText {
     
     if (![self parseCalculateString] || self.components.count == 0) {
-        return notCorrectExpression;
+        *errorText = notCorrectExpression;
+        return 0.0;
     }
     
-    return @"";
+    while (self.components.count > 1) {
+        
+        [self calculateExpression:errorText];
+        
+        if (*errorText != nil) {
+            return 0.0;
+        }
+    }
+    
+    NSNumber *result = self.components.lastObject;
+    return result.doubleValue;
+}
+
+- (void)calculateExpression:(NSString **)errorText {
+    
+    if (self.components.count < 3) {
+        *errorText = notCorrectExpression;
+        return;
+    }
+    
+    double result = 0.0;
+    double firstOperand = 0.0;
+    double secondOperand = 0.0;
+    NSInteger i;
+    
+    for (i = 0; i < self.components.count; i++) {
+        
+        id arrayObject = [self.components objectAtIndex:i];
+        
+        if ([arrayObject isKindOfClass:[NSNumber class]]) {
+            firstOperand = secondOperand;
+            secondOperand = [(NSNumber *)arrayObject doubleValue];
+        } else {
+            Operation operation = [self.operations objectForKey:(NSString *)arrayObject];
+            result = operation(firstOperand, secondOperand, errorText);
+            break;
+        }
+    }
+    
+    NSRange range;
+    range.location = i - 2;
+    range.length = 3;
+    
+    [self.components removeObjectsInRange:range];
+    [self.components insertObject:[NSNumber numberWithDouble:result] atIndex:i-2];
 }
 
 @end

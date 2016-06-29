@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSString *calculateString;
 
-- (NSString *)checkCalculateStringOnValid;
-- (NSString *)calculate;
+- (BOOL)checkCalculateStringOnValid:(NSString **)errorText;
+- (double)calculate:(NSString **)errorText;
 
 @end
