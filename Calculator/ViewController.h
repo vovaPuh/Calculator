@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextField *calculateStringTextField;
+
+- (IBAction)calculateAction:(UIButton *)sender;
 
 @end
 

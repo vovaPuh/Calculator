@@ -14,6 +14,7 @@
 		F71466421D236B4400ECDF17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F71466411D236B4400ECDF17 /* Assets.xcassets */; };
 		F71466451D236B4400ECDF17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F71466431D236B4400ECDF17 /* LaunchScreen.storyboard */; };
 		F71466501D236B4400ECDF17 /* CalculatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F714664F1D236B4400ECDF17 /* CalculatorTests.m */; };
+		F714665C1D236C5600ECDF17 /* VMCalculation.m in Sources */ = {isa = PBXBuildFile; fileRef = F714665B1D236C5600ECDF17 /* VMCalculation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		F714664B1D236B4400ECDF17 /* CalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F714664F1D236B4400ECDF17 /* CalculatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorTests.m; sourceTree = "<group>"; };
 		F71466511D236B4400ECDF17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F714665A1D236C5600ECDF17 /* VMCalculation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMCalculation.h; sourceTree = "<group>"; };
+		F714665B1D236C5600ECDF17 /* VMCalculation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VMCalculation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,14 +84,11 @@
 		F71466341D236B4400ECDF17 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				F71466381D236B4400ECDF17 /* AppDelegate.h */,
-				F71466391D236B4400ECDF17 /* AppDelegate.m */,
 				F714663B1D236B4400ECDF17 /* ViewController.h */,
 				F714663C1D236B4400ECDF17 /* ViewController.m */,
+				F714665A1D236C5600ECDF17 /* VMCalculation.h */,
+				F714665B1D236C5600ECDF17 /* VMCalculation.m */,
 				F714663E1D236B4400ECDF17 /* Main.storyboard */,
-				F71466411D236B4400ECDF17 /* Assets.xcassets */,
-				F71466431D236B4400ECDF17 /* LaunchScreen.storyboard */,
-				F71466461D236B4400ECDF17 /* Info.plist */,
 				F71466351D236B4400ECDF17 /* Supporting Files */,
 			);
 			path = Calculator;
@@ -97,6 +97,11 @@
 		F71466351D236B4400ECDF17 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F71466381D236B4400ECDF17 /* AppDelegate.h */,
+				F71466391D236B4400ECDF17 /* AppDelegate.m */,
+				F71466411D236B4400ECDF17 /* Assets.xcassets */,
+				F71466431D236B4400ECDF17 /* LaunchScreen.storyboard */,
+				F71466461D236B4400ECDF17 /* Info.plist */,
 				F71466361D236B4400ECDF17 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -211,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F714665C1D236C5600ECDF17 /* VMCalculation.m in Sources */,
 				F714663D1D236B4400ECDF17 /* ViewController.m in Sources */,
 				F714663A1D236B4400ECDF17 /* AppDelegate.m in Sources */,
 				F71466371D236B4400ECDF17 /* main.m in Sources */,
